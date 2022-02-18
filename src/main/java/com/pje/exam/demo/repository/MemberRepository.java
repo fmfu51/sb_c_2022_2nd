@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import com.pje.exam.demo.vo.Member;
+
 @Mapper
 public interface MemberRepository {
 	@Insert("""
@@ -20,6 +22,14 @@ public interface MemberRepository {
 						""")
 	void join(@Param("loginId") String loginId, @Param("loginPw") String loginPw, @Param("name") String name,
 			@Param("nickname") String nickname, @Param("cellphoneNo") String cellphoneNo, @Param("email") String email);
-@Select("SELECT LAST_INSERT_ID()")
+
+	@Select("SELECT LAST_INSERT_ID()")
 	int getLastInsertId();
+
+	@Select("""
+			SELECT *
+			FROM `member` AS M
+			WHERE M.id = #{id}
+			""")
+	Member getMemberById(@Param("id") int id);
 }
