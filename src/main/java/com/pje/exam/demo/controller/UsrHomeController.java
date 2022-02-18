@@ -9,7 +9,7 @@ import com.pje.exam.demo.service.MemberService;
 @Controller
 public class UsrHomeController {
 	private MemberService memberService;
-
+	
 	public UsrHomeController(MemberService memberService) {
 		this.memberService = memberService;
 	}
