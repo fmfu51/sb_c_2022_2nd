@@ -54,7 +54,25 @@ public class UsrMemberController {
 		}
 
 		Member member = memberService.getMemberById(joinRd.getData1());
-		return ResultData.newData(joinRd, member);
+		return ResultData.newData(joinRd, "member", member);
+	}
+
+	@RequestMapping("/usr/member/doLogout")
+	@ResponseBody
+	public ResultData doLogout(HttpSession httpSession) {
+		boolean isLogined = false;
+
+		if (httpSession.getAttribute("loginedMemberId") == null) {
+			isLogined = true;
+		}
+
+		if (isLogined) {
+			return ResultData.from("S-1", "이미 로그아웃 상태입니다.");
+		}
+
+		httpSession.removeAttribute("loginedMemberId");
+
+		return ResultData.from("S-2", "로그아웃 되었습니다.");
 	}
 
 	@RequestMapping("/usr/member/doLogin")
@@ -91,23 +109,5 @@ public class UsrMemberController {
 		httpSession.setAttribute("loginedMemberId", member.getId());
 
 		return ResultData.from("S-1", Ut.f("%s님 환영합니다.", member.getNickname()));
-	}
-
-	@RequestMapping("/usr/member/doLogout")
-	@ResponseBody
-	public ResultData doLogout(HttpSession httpSession) {
-		boolean isLogined = false;
-
-		if (httpSession.getAttribute("loginedMemberId") != null) {
-			isLogined = true;
-		}
-
-		if (isLogined) {
-			return ResultData.from("S-1", "이미 로그아웃 상태입니다.");
-		}
-
-		httpSession.removeAttribute("loginedMemberId");
-
-		return ResultData.from("S-2", "로그아웃 되었습니다.");
 	}
 }
