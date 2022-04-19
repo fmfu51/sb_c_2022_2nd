@@ -23,7 +23,7 @@ public class Rq {
 		this.req = req;
 		this.resp = resp;
 
-		HttpSession httpSession = req.getSession();
+		HttpSession httpSession = req.getSession(); 
 		boolean isLogined = false;
 		int loginedMemberId = 0;
 
