@@ -114,7 +114,7 @@ public class UsrArticleController {
 		if (actorCanModifyRd.isFail()) {
 			return rq.historyBackJsOnView(actorCanModifyRd.getMsg());
 		}
-		
+
 		model.addAttribute("article", article);
 
 		return "usr/article/modify";
@@ -138,8 +138,13 @@ public class UsrArticleController {
 		}
 
 		articleService.modifyArticle(id, title, body);
-		
+
 		return Ut.jsReplace(Ut.f("%d번 글이 수정되었습니다.", id), Ut.f("../article/detail?id=%d", id));
+	}
+
+	@RequestMapping("/usr/article/write")
+	public String showWrite(HttpServletRequest req, Model model) {
+		return "usr/article/write";
 	}
 	// 액션 메서드 끝
 }
