@@ -1,15 +1,15 @@
 # DB 생성
-DROP DATABASE IF EXISTS sb_c_2021_2nd;
-CREATE DATABASE sb_c_2021_2nd;
-USE sb_c_2021_2nd;
+DROP DATABASE IF EXISTS sb_c_2022_2nd;
+CREATE DATABASE sb_c_2022_2nd;
+USE sb_c_2022_2nd;
 
 # 게시물 테이블 생성
 CREATE TABLE article (
-id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-regDate DATETIME NOT NULL,
-updateDate DATETIME NOT NULL,
-title CHAR(100) NOT NULL,
-`body` TEXT NOT NULL
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    title CHAR(100) NOT NULL,
+    `body` TEXT NOT NULL
 );
 
 # 게시물, 테스트 데이터 생성
@@ -30,7 +30,6 @@ SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목 3',
 `body` = '내용 3';
-
 
 # 회원 테이블 생성
 CREATE TABLE `member` (
@@ -58,7 +57,7 @@ authLevel = 7,
 `name` = '관리자',
 nickname = '관리자',
 cellphoneNo = '01011111111',
-email = 'fmfu5129@gmail.com';
+email = 'jangka512@gmail.com';
 
 # 회원, 테스트 데이터 생성(일반 회원)
 INSERT INTO `member`
@@ -69,7 +68,7 @@ loginPw = 'user1',
 `name` = '사용자1',
 nickname = '사용자1',
 cellphoneNo = '01011111111',
-email = 'fmfu5129@gmail.com';
+email = 'jangka512@gmail.com';
 
 INSERT INTO `member`
 SET regDate = NOW(),
@@ -79,8 +78,7 @@ loginPw = 'user2',
 `name` = '사용자2',
 nickname = '사용자2',
 cellphoneNo = '01011111111',
-email = 'fmfu5129@gmail.com';
-
+email = 'jangka512@gmail.com';
 
 # 게시물 테이블에 회원정보 추가
 ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER `updateDate`;
@@ -88,7 +86,7 @@ ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER `updateD
 # 기존 게시물의 작성자를 2번호으로 지정
 UPDATE article
 SET memberId = 2
-WHERE memberId = 0; 
+WHERE memberId = 0;
 
 # 게시판 테이블 생성
 CREATE TABLE board (
@@ -112,7 +110,7 @@ INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
 `code` = 'free1',
-`name` = '자유게시판';
+`name` = '자유';
 
 # 게시판 테이블에 boardId 칼럼 추가
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER memberId;
