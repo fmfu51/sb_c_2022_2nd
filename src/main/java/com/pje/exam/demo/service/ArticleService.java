@@ -91,7 +91,6 @@ public class ArticleService {
 	}
 
 	public int getArticlesCount(int boardId) {
-		
 		return articleRepository.getArticlesCount(boardId);
 	}
 }
