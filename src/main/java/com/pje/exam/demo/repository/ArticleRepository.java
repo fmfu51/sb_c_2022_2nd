@@ -2,9 +2,13 @@ package com.pje.exam.demo.repository;
 
 import java.util.List;
 
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.pje.exam.demo.vo.Article;
 
@@ -39,9 +43,12 @@ public interface ArticleRepository {
 				AND A.boardId = #{boardId}
 			</if>
 			ORDER BY A.id DESC
+			<if test="limitTake != -1">
+				LIMIT #{limitStart}, #{limitTake}
+			</if>
 			</script>
 			""")
-	public List<Article> getArticles(@Param("boardId") int boardId);
+	public List<Article> getArticles(@Param("boardId") int boardId, int limitStart, int limitTake);
 
 	public int getLastInsertId();
 
