@@ -2,7 +2,6 @@ package com.pje.exam.demo.repository;
 
 import java.util.List;
 
-
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,7 +13,8 @@ import com.pje.exam.demo.vo.Article;
 
 @Mapper
 public interface ArticleRepository {
-	public void writeArticle(@Param("memberId") int memberId, @Param("boardId") int boardId, @Param("title") String title, @Param("body") String body);
+	public void writeArticle(@Param("memberId") int memberId, @Param("boardId") int boardId,
+			@Param("title") String title, @Param("body") String body);
 
 	@Select("""
 			SELECT A.*,
@@ -38,7 +38,7 @@ public interface ArticleRepository {
 			FROM article AS A
 			LEFT JOIN member AS M
 			ON A.memberId = M.id
-			WHERE 1 
+			WHERE 1
 			<if test="boardId != 0">
 				AND A.boardId = #{boardId}
 			</if>
@@ -53,7 +53,7 @@ public interface ArticleRepository {
 					<otherwise>
 						AND (
 							A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-							OR 
+							OR
 							A.body LIKE CONCAT('%', #{searchKeyword}, '%')
 						)
 					</otherwise>
@@ -65,7 +65,8 @@ public interface ArticleRepository {
 			</if>
 			</script>
 			""")
-	public List<Article> getArticles(int boardId, String searchKeywordTypeCode, String searchKeyword, int limitStart, int limitTake);
+	public List<Article> getArticles(int boardId, String searchKeywordTypeCode, String searchKeyword, int limitStart,
+			int limitTake);
 
 	public int getLastInsertId();
 
@@ -88,7 +89,7 @@ public interface ArticleRepository {
 					<otherwise>
 						AND (
 							A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-							OR 
+							OR
 							A.body LIKE CONCAT('%', #{searchKeyword}, '%')
 						)
 					</otherwise>
@@ -97,4 +98,13 @@ public interface ArticleRepository {
 			</script>
 			""")
 	public int getArticlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword);
+
+	@Update("""
+			<script>
+			UPDATE article
+			SET hitCount = hitCount + 1
+			WHERE id = #{id}
+			</script>
+			""")
+	public int increaseHitCount(int id);
 }
